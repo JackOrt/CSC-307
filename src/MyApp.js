@@ -33,14 +33,20 @@ function removeOneCharacter (index) {
     </div>
   )
 
-  function updateList(person) {
-    post(person.name, person.job).then( result => {
-      if (result) {
-        setCharacters([...characters, person]);
-      }
 
-    });    
+  function updateList(person) {
+    post(person.name, person.job);   
     
+    setCharacters([...characters, person]);
+    
+    fetchAll().then( result => {
+      console.log(result.status); 
+      if (result)
+          setCharacters(result);
+      });
+
+      setCharacters([...characters, person]);
+
   }
   
 }
