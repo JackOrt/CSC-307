@@ -35,17 +35,16 @@ function removeOneCharacter (index) {
 
 
   function updateList(person) {
-    post(person.name, person.job);   
     
-    setCharacters([...characters, person]);
-    
-    fetchAll().then( result => {
-      console.log(result.status); 
-      if (result)
-          setCharacters(result);
-      });
+    post(person.name, person.job).then( updatedPerson => {
+  
+      setCharacters([...characters, {
+        "id": updatedPerson.id,
+        "job": updatedPerson.job,
+        "name": updatedPerson.name
+      }]);
+  });
 
-      setCharacters([...characters, person]);
 
   }
   
@@ -60,13 +59,13 @@ async function post(newName, newJob){
       job: newJob,
       id: "",
     });
-     if (response.status == 200) {
-       console.log("posted status: " + response.status);
-       return response;
+     if (response.status == 201) {
+       console.log("posted statuss: " + response.data.user.id);
+       return response.data.user;
      } else 
      {
       console.log("not posted status: " + response.status);
-      //return response;
+      return response.body.user;
      }     
   }
   catch (error){

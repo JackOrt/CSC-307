@@ -46,8 +46,8 @@ app.post('/users', (req, res) => {
     const userToAdd = req.body;
     userToAdd['id'] = Date.now().toString();
     addUser(userToAdd);
-    console.log("user added to backend");
-    res.status(201).end(userToAdd);
+    console.log("user added to backend : " + userToAdd);
+    res.status(201).send({user : userToAdd});
 });
 
 function addUser(user){
